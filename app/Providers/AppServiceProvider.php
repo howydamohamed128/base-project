@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
+use BezhanSalleh\LanguageSwitch\LanguageSwitch;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
+            $switch
+                ->locales(['ar', 'en'])
+                ->visible(outsidePanels: true)
+                ->circular();
+                // ->flags([
+                //     'ar' => asset('flags/sa.svg'),
+                //     'en' => asset('flags/us.svg'),
+                // ]);
+        });
+
         $this->configureDefaults();
     }
 
